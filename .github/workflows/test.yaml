@@ -28,3 +28,19 @@ jobs:
 
       - name: Run tests
         run: python -m unittest
+
+  docker-test:
+    name: Test using docker container
+    runs-on: ubuntu-latest
+    permissions:
+      packages: read
+
+    env:
+      DOCKER_IMAGE: ghcr.io/pradyumnakrishna/in-toto-testing:latest
+
+    steps:
+      - name: Pull latest docker image
+        run: docker pull ${{ env.DOCKER_IMAGE }}
+
+      - name: Run tests
+        run: docker run ${{ env.DOCKER_IMAGE }}
