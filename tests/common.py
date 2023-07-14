@@ -10,6 +10,8 @@ import subprocess
 import tempfile
 import unittest
 
+from .util import remove_with_write
+
 
 class TmpDirMixin:
     """Mixin with classmethods to create and change into a temporary directory,
@@ -29,7 +31,7 @@ class TmpDirMixin:
     def tear_down_test_dir(cls):
         """Change back to original CWD and remove temporary directory."""
         os.chdir(cls.original_cwd)
-        shutil.rmtree(cls.test_dir)
+        shutil.rmtree(cls.test_dir, onerror=remove_with_write)
 
 
 class CliTestCase(unittest.TestCase):

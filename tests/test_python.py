@@ -10,6 +10,7 @@ import unittest
 from shutil import move, rmtree
 
 from .common import CliTestCase, TmpDirMixin
+from .util import remove_with_write
 
 
 class TestPython(CliTestCase, TmpDirMixin):
@@ -127,7 +128,7 @@ class TestPython(CliTestCase, TmpDirMixin):
         self.assert_cli_sys_exit(package_cmd, 0)
 
         # Removing demo-project directory before verifying.
-        rmtree("demo-project")
+        rmtree("demo-project", onerror=remove_with_write)
 
         # Verify using in-toto-python verify.
         verify_cmd = [
@@ -138,7 +139,7 @@ class TestPython(CliTestCase, TmpDirMixin):
             self.owner_pub,
         ]
         self.assert_cli_sys_exit(verify_cmd, 0)
-        rmtree("demo-project")
+        rmtree("demo-project", onerror=remove_with_write)
 
         # Verify using in-toto-golang verify.
         verify_cmd_go = [
