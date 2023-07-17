@@ -87,11 +87,10 @@ class TestPython(CliTestCase, TmpDirMixin):
 
         self.assert_cli_sys_exit(update_version_start_cmd, 0)
 
-        update_version = (
-            'echo \'VERSION = "foo-v1"\n\n'
-            'print("Hello in-toto")\n\' > demo-project/foo.py'
-        )
-        subprocess.call(update_version, shell=True)
+        # Update version number in foo.py
+        foo_content = 'echo \'VERSION = "foo-v1"\n\nprint("Hello in-toto")\n\''
+        with open("demo-project/foo.py", "w", encoding="utf-8") as foo_py:
+            foo_py.write(foo_content)
 
         update_version_stop_cmd = [
             "in-toto-record",
