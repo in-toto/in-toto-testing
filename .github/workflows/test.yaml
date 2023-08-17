@@ -8,6 +8,8 @@ jobs:
       fail-fast: false
       matrix:
         runner: [ubuntu-latest, windows-latest]
+        in_toto_go: ['latest', 'HEAD']
+        in_toto_python: ['latest', 'HEAD']
     runs-on: ${{matrix.runner}}
 
     steps:
@@ -24,11 +26,21 @@ jobs:
         with:
           go-version: '1.19.x'
 
-      - name: Install in-toto-python
-        run: python -m pip install in-toto
+      - name: Install latest in-toto-python version
+        run: |
+          if [ "${{ matrix.in_toto_python }}" == "latest" ]
+          then
+            python -m pip install in-toto
+          elif [ "${{ matrix.in_toto_python }}" == "HEAD" ]
+          then
+            python -m pip install git+https://github.com/in-toto/in-toto.git
+          else
+            python -m pip install git+https://github.com/in-toto/in-toto.git@${{ matrix.in_toto_python }}
+          fi
+        shell: bash
 
       - name: Install in-toto-golang
-        run: go install github.com/in-toto/in-toto-golang@latest
+        run: go install github.com/in-toto/in-toto-golang@${{matrix.in_toto_go}}
 
       - name: Run tests
         run: python -m unittest
