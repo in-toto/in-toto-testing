@@ -107,7 +107,8 @@ class TestGolang(CliTestCase, TmpDirMixin):
 
         # NOTE: in-toto-golang doesn't removes unfinished link on record stop.
         # TODO: Report this issue.
-        os.remove(".update-version.776a00e2.link-unfinished")
+        if os.path.exists(".update-version.776a00e2.link-unfinished"):
+            os.remove(".update-version.776a00e2.link-unfinished")
 
         # Step 3: Package (Carl) using in-toto run.
         package_cmd = [
