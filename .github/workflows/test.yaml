@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [ubuntu-latest, windows-latest]
+        runner: [macos-latest-xlarge]
         in_toto_go: ['latest', 'HEAD']
         in_toto_python: ['latest', 'HEAD']
     runs-on: ${{matrix.runner}}

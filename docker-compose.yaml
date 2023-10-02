@@ -1,0 +1,8 @@
+version: "3"
+services:
+  testing:
+    build: .
+    volumes:
+      - ./testing:/testing
+    stdin_open: true 
+    tty: true
