@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runner: [macos-latest-xlarge]
+        runner: [macos-14]
         in_toto_go: ['latest', 'HEAD']
         in_toto_python: ['latest', 'HEAD']
     runs-on: ${{matrix.runner}}
@@ -21,6 +21,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Arch
+        run: uname -m
 
       - name: Set up Python 3.10
         uses: actions/setup-python@v4
